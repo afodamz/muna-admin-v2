@@ -1,4 +1,4 @@
-import * as types from "../Actions/actionContents";
+import * as types from "../Actions/actionTypes";
 const initialState = {
   proverbs: null,
   activeProverb: null,
@@ -34,6 +34,21 @@ export default function (state = initialState, action) {
         loading: false,
       };
 
+      case types.PUBLISH_PROVERB:
+        const updated = (data, id) => {
+          const clonedProverb = state.proverbs
+          const targetProverb = state.proverbs.find(data=> data.id === id)
+          const newProverb = {...targetProverb, publish: data.publish}
+          let newIndex = state.proverbs.findIndex(x=> x.id === id)
+          clonedProverb[newIndex] = newProverb
+          return clonedProverb
+        }
+      return {
+        ...state,
+        activeProverb: updated(payload.data, payload.id),
+        loading: false,
+      };
+
       case types.DELETE_PROVERB:
       return {
         ...state,
@@ -54,6 +69,38 @@ export default function (state = initialState, action) {
         return {
           ...state,
           activeProverb:{...state.activeProverb } ,
+          loading: false,
+        };
+
+        case types.UPDATE_TRANSLATION:
+          let cloneActive = state.activeProverb
+          let newActiveproverb = () => {
+            let newIndex = cloneActive.translation.findIndex(x=> x.id === payload.updateId)
+            const clonedUpdate = cloneActive.translation.find(data=> data.id === payload.updateId)
+            let newUpdate = {...clonedUpdate, ...payload.data}
+            cloneActive.translation[newIndex] = newUpdate
+            
+            return cloneActive
+          }
+         return {
+          ...state,
+          activeProverb: newActiveproverb() ,
+          loading: false,
+        };
+
+        case types.UPDATE_INTERPRETATION:
+          const cloneState = state.activeProverb
+          const newActiveProverb = () => {
+            let newIndex = cloneState.interpretation.findIndex(x=> x.id === payload.updateId)
+            const clonedUpdate = cloneState.interpretation.find(data=> data.id === payload.updateId)
+            let newUpdate = {...clonedUpdate, ...payload.data}
+            cloneState.interpretation[newIndex] = newUpdate
+            
+            return cloneState
+          }
+         return {
+          ...state,
+          activeProverb: newActiveProverb() ,
           loading: false,
         };
 

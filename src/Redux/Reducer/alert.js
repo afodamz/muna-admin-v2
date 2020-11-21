@@ -1,4 +1,4 @@
-import * as types from "../Actions/actionContents";
+import * as types from "../Actions/actionTypes";
 
 const initialState = null;
 

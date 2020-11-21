@@ -1,5 +1,5 @@
 import ProverbAction from './ProverbActions'
-import AlertAction from './AlertAction'
+import AlertAction from './alertAction'
 
 export {
     ProverbAction,

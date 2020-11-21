@@ -10,7 +10,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import * as actions from '../../../Redux/Actions/auth/auth';
+import * as actions from '../../../Redux/Actions/auth';
 import { connect } from 'react-redux';
 import { ValidatorForm} from 'react-material-ui-form-validator';
 

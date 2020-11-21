@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Proptypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import { FormControl, MenuItem, Grid } from "@material-ui/core";
@@ -18,6 +18,10 @@ const languageData = [
     value: "hausa",
     label: "Hausa",
   },
+  {
+    value: "English",
+    label: "English",
+  },
 ];
 
 const useStyles = makeStyles((theme) => ({
@@ -28,17 +32,25 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const UpdateForm = ({ createAction, updateType, proverbId }) => {
+const UpdateForm = ({ createAction, updateType, proverbId, defaultValue }) => {
   const [formData, setForm] = useState({
     content: "",
     language: "",
     publish: false,
   });
-  const [ setValidationErrors] = useState({
+
+  useEffect(()=> {
+    if(defaultValue) setForm({...formData, 
+      content: defaultValue.content, 
+      language: defaultValue.language
+    })
+  }, [defaultValue])
+  const [ error, setValidationErrors] = useState({
     proverbError: "",
     languageError: "",
     category: "",
   });
+
   const { content, language } = formData;
 
   const handleChange = (event) => {
@@ -51,7 +63,7 @@ const UpdateForm = ({ createAction, updateType, proverbId }) => {
   const submitForm = (event) => {
     event.preventDefault();
     const error = formValidation(formData);
-    if (error) return setValidationErrors();
+    if (error) return setValidationErrors({proverbError: true});
     createAction({formData});
   };
 

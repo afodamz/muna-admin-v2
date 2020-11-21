@@ -27,6 +27,7 @@ const PreviewProverb = ({
   DeleteProverbProp,
   UpdateProverb,
   CreateProverbProp,
+  UpdateProverbProp,
   ActivateProverb,
   match,
 }) => {
@@ -45,6 +46,7 @@ const PreviewProverb = ({
             content={activeProverb}
             publishHandler={PublishProverbProp}
             deleteHandler={DeleteProverbProp}
+            editHandler={(data)=>UpdateProverbProp(data, id)}
             createActionHandler={(data, id)=>CreateProverbProp(data, id)}
           />
         </>

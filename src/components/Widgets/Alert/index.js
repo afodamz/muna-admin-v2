@@ -26,6 +26,7 @@ const useStyles = makeStyles((theme) => ({
     height: "100%",
     marginRight: theme.spacing(1),
     padding: theme.spacing(1),
+    textTransform: 'capitalize',
     // borderRadius: theme.spacing(0.5, 0, 0, 0.5),
     color: theme.palette.background.default,
   },

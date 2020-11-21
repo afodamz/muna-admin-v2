@@ -8,6 +8,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  TablePagination
 } from "@material-ui/core/";
 import Paper from "@material-ui/core/Paper";
 
@@ -46,8 +47,20 @@ const useStyles = makeStyles((theme) => ({
 
 const Table = ({ tableHeader, children, actionField }) => {
   const classes = useStyles();
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(+event.target.value);
+    setPage(0);
+  };
 
   return (
+    <>
     <TableContainer className={classes.marginBtn} component={Paper}>
       <UITable className={classes.table} aria-label="customized table">
         <TableHead>
@@ -61,6 +74,17 @@ const Table = ({ tableHeader, children, actionField }) => {
         <TableBody>{children}</TableBody>
       </UITable>
     </TableContainer>
+    {/* <TablePagination
+    rowsPerPageOptions={[10, 25]}
+    component="div"
+    // count={rows.length}
+    count={10}
+    rowsPerPage={rowsPerPage}
+    page={page}
+    onChangePage={handleChangePage}
+    onChangeRowsPerPage={handleChangeRowsPerPage}
+  /> */}
+  </>
   );
 };
 

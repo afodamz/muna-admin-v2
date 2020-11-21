@@ -1,4 +1,4 @@
-import * as type from "./actionContents";
+import * as type from "./actionTypes";
 
 
 export const SetAlert = (alertData) => (dispatch) => {

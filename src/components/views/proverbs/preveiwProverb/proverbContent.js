@@ -11,6 +11,10 @@ const tabTitle = [
     id: 1,
     value: "Interpretation",
   },
+  {
+    id: 2,
+    value: "Categories",
+  },
 ];
 
 const useStyles = makeStyles((theme) => ({

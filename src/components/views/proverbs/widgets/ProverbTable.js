@@ -22,11 +22,15 @@ const tableHeader = [
     value: "S/N",
   },
   {
-    id: 2,
+    id: 3,
     value: "Proverb",
   },
   {
-    id: 3,
+    id: 4,
+    value: "Ethnic",
+  },
+  {
+    id: 5,
     value: "Status",
   },
 ];
@@ -75,6 +79,7 @@ const ProverbTable = ({ proverbs, publishHandler, previewHandler, deleteHandler 
             {index + 1}
           </StyledTableCell>
           <StyledTableCell>{data.content}</StyledTableCell>
+          <StyledTableCell>{data.ethnic.language}</StyledTableCell>
           <StyledTableCell>
             <span
               className={data.publish ? classes.published : classes.unpublished}
@@ -87,7 +92,7 @@ const ProverbTable = ({ proverbs, publishHandler, previewHandler, deleteHandler 
               menuTitle={menuTitle}
               publish={data.publish}
               toggleState={true}
-              publishHandler={() => publishHandler(data.publish)}
+              publishHandler={() => publishHandler(data)}
               previewHandler={() => previewHandler(data.id)}
               deleteHandler={() => deleteHandler(data.id)}
             />

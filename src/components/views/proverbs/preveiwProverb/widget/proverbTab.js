@@ -5,7 +5,7 @@ import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Box from "@material-ui/core/Box";
-import { Translation, Interpretation } from "../widget";
+import { Translation, Interpretation, Categories } from "../widget";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -52,7 +52,7 @@ export default function SimpleTabs({
   editHandler,
   deleteHandler,
   createActionHandler,
-  content: { translation, interpretation },
+  content: { translation, interpretation, category },
 }) {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
@@ -93,6 +93,9 @@ export default function SimpleTabs({
           translation={translation}
           createActionHandler={createActionHandler}
         />
+      </TabPanel>
+      <TabPanel value={value} index={2}>
+        <Categories categories={category}/>
       </TabPanel>
     </div>
   );

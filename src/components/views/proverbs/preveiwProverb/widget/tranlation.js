@@ -14,6 +14,8 @@ const menuTitle = [
   {
     id: "1M",
     title: "Edit",
+    modal: true,
+    modalTitle: 'Create'
   },
   {
     id: "2M",
@@ -92,6 +94,19 @@ const Tranlation = ({
     createActionHandler({...data.formData, proverb: match.params.id}, updateType );
   };
 
+  const UpdateTransaltion = (data, id) => {
+    setModal(!closeModal);
+    editHandler({...data, updateId: id, updateType:"translation"})
+  }
+
+  const ModalChildComponent = ({initialParams, id}) => {
+    return (
+      <> 
+        <UpdateForm closeModal={closeModal} updateType="Translation" createAction={(data)=>UpdateTransaltion(data, id)} defaultValue={initialParams} />
+      </>
+    )
+  }
+
   return (
     <>
       <TableBody
@@ -117,15 +132,16 @@ const Tranlation = ({
             </StyledTableCell>
             <StyledTableCell align="right">
               <MenuDropDown
+              closeModal={closeModal}
                 menuTitle={menuTitle}
                 publish={data.publish}
                 toggleState={true}
                 publishHandler={() => publishHandler({ type: "translation" })}
-                previewHandler={() => alert('in production')
-                  // editHandler(data.id, data.content, "type")
-                }
+                // previewHandler={() => alert('in production')}
                 deleteHandler={() => deleteHandler(data.id, {updateType:'translation'})}
-              />
+              >
+                <ModalChildComponent initialParams={data} id={data.id} />
+              </MenuDropDown>
             </StyledTableCell>
           </TableRow>
         ))}

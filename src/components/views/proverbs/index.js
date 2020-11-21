@@ -11,6 +11,7 @@ import {
   CreateProverbAction,
   DeleteProverb,
   ActivateProverb,
+  UpdateProverb
 } from "../../../Redux/Actions/ProverbActions";
 
 const useStyles = makeStyles((theme) => ({
@@ -40,7 +41,7 @@ const Proverbs = ({
   FetchProverb,
   CreateProverbAction,
   DeleteProverb,
-  ActivateProverb,
+  UpdateProverb,
   proverbs: { loading, proverbs, ...rest },
 }) => {
   const [closeModal, setModal] = useState(false);
@@ -49,14 +50,16 @@ const Proverbs = ({
   }, [FetchProverb]);
   const classes = useStyles();
 
-  const publishHandler = (publish) => {
-    console.log(publish);
-    alert('Publish API is progress ...')
+  const publishHandler = (data) => {
+    const proverbId = data.id
+    const updateData = {
+      content: data.content,
+      category: [data.category[0].id],
+      ethnic: data.ethnic.id,
+      publish: !data.publish
+    }
+    UpdateProverb(updateData, proverbId, {updateType:'publish'})
   };
-
-  // const previewHandler = (id) => {
-  //   history.push(`/admin/proverbs/${id}`);
-  // };
 
   const createAction = (data) => {
     setModal(!closeModal);
@@ -75,12 +78,12 @@ const Proverbs = ({
           </Modal>
         </Box>
         <Box className={classes.table}>
-          {loading && proverbs === null ? (
+          {proverbs === null && loading  ? (
             <h1> Loading... </h1>
           ) : (
             <ProverbTable status
               proverbs={proverbs}
-              publishHandler={(publish) => publishHandler(publish)}
+              publishHandler={(data) => publishHandler(data)}
               previewHandler={(id) => history.push(`/admin/proverbs/${id}`)}
               deleteHandler={(id) => DeleteProverb(id)}
             />
@@ -106,4 +109,5 @@ export default connect(mapStateToProps, {
   CreateProverbAction,
   DeleteProverb,
   ActivateProverb,
+  UpdateProverb
 })(Proverbs);

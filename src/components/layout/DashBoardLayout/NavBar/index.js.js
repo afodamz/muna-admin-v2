@@ -22,6 +22,7 @@ import {
   Users as UsersIcon
 } from 'react-feather';
 import NavItem from './NavItem';
+import { TrainRounded, TrendingUpTwoTone } from '@material-ui/icons';
 
 const user = {
   avatar: '/static/images/avatars/avatar_6.png',
@@ -56,20 +57,16 @@ const items = [
     title: 'Settings'
   },
   {
-    href: '/admin/role',
+    href: 'https://munaproverb.herokuapp.com/admin/login/?next=/admin',
     icon: LockIcon,
-    title: 'Roles and Permission'
+    title: 'Roles and Permission',
+    blankLink: true
   },
   {
     href: '/register',
     icon: UserPlusIcon,
     title: 'Register'
   },
-  // {
-  //   href: '/admin/test_component',
-  //   icon: UserPlusIcon,
-  //   title: 'Test_component'
-  // },
 ];
 
 const useStyles = makeStyles(() => ({
@@ -136,6 +133,7 @@ const NavBar = ({ onMobileClose, openMobile }) => {
         <List>
           {items.map((item) => (
             <NavItem
+              blankLink = {item.blankLink && true}
               href={item.href}
               key={item.title}
               title={item.title}
@@ -169,9 +167,10 @@ const NavBar = ({ onMobileClose, openMobile }) => {
           mt={2}
         >
           <Button
+            target='_blank'
             color="primary"
             component="a"
-            href="https://localhost:3030/muna"
+            href="https://munafrontend.herokuapp.com/"
             variant="contained"
           >
             MUNA

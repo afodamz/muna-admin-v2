@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink as RouterLink } from 'react-router-dom';
+import { NavLink as RouterLink, Link } from 'react-router-dom';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import {
@@ -45,6 +45,7 @@ const NavItem = ({
   href,
   icon: Icon,
   title,
+  blankLink,
   ...rest
 }) => {
   const classes = useStyles();
@@ -58,7 +59,7 @@ const NavItem = ({
       <Button
         activeClassName={classes.active}
         className={classes.button}
-        component={RouterLink}
+        component={blankLink? 'a' : RouterLink}
         to={href}
       >
         {Icon && (

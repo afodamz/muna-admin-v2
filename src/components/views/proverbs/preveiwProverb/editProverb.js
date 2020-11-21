@@ -39,7 +39,7 @@ const EditProverb = ({ content, submitUpdate }) => {
   const [edit, SetEdit] = useState(false); 
   const classes = useStyles();
   const UpdateHandler = (data, id) =>{
-    submitUpdate(data, id)
+    submitUpdate(data, id, {updateType: content})
     SetEdit(!edit)
   }
   return (

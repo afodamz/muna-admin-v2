@@ -1,6 +1,5 @@
-import * as type from "./actionContents";
+import * as type from "./actionTypes";
 import { SetAlert } from "./AlertAction";
-import axios from "axios";
 import API from "../../components/Util/API";
 
 const token = "5d7f4e9acfab25293b08298aa676495fdfb430c4";
@@ -74,11 +73,16 @@ export const ActivateProverb = (proverbID) => async (dispatch) => {
   }
 };
 
-export const UpdateProverb = (data, id) => async (dispatch) => {
+export const UpdateProverb = (data, id, {updateType}) => async (dispatch) => {
   try {
     const result = await API.put(`/proverb/${id}/`, data, config);
+    const ACTION_TYPE = 
+    updateType === "publish"
+      ? type.PUBLISH_PROVERB
+      : type.EDIT_PROVERB;
+
     dispatch({
-      type: type.EDIT_PROVERB,
+      type: ACTION_TYPE,
       payload: {data: result.data, id: id },
     });
     
@@ -118,21 +122,22 @@ export const CreateProverbProp = (data, updateType) => async (
 
 // @Describ  Update Translation/interpretation
 // RequestType Post
-export const UpdateProverbProp = (data) => async (dispatch) => {
-  console.log(data);
-  axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
-  axios.defaults.xsrfCookieName = "csrftoken";
-  axios.defaults.headers = {
-    "Content-Type": "application/json",
-    Authorization: `Token ${token}`,
-  };
-
-  try {await API.put("/translation", data);
+export const UpdateProverbProp = ({formData, updateId, updateType}, proverb) => async (dispatch) => {
+  const newData = {...formData, proverb: proverb}
+  try {
+     API.put(`/${updateType}/${updateId}/`, newData, config);
+     const ACTION_TYPE = updateType === "translation"
+     ? type.UPDATE_TRANSLATION
+     : type.UPDATE_INTERPRETATION;
     dispatch({
-      type: type.UPDATE_TRANSLATION,
+      type: ACTION_TYPE,
+      payload: {data: formData, proverbId: proverb, updateId: updateId  }
     });
+    dispatch(SetAlert({ successType: true, alertMsg: `Update ${updateType}!` }));
   } catch (error) {
-    console.log(`😱 Axios request failed: ${error.message}`);
+    if(error.message === 'Network Error') return
+    dispatch(SetAlert({ successType: true, alertMsg: "Network Down, Try Again.!" }));
+    dispatch(SetAlert({ successType: false, alertMsg: "Update Failed!" }));
   }
 };
 
@@ -149,7 +154,7 @@ export const DeleteProverbProp = (id, {updateType}) => async (dispatch) => {
       type: ACTION_TYPE,
       payload: id
     });
-    dispatch(SetAlert({ successType: false, alertMsg: "Deleted!" }));
+    dispatch(SetAlert({ successType: false, alertMsg: `Deleted ${updateType}!` }));
   } catch (error) {
     if(error.message === 'Network Error') return
     dispatch(SetAlert({ successType: true, alertMsg: "Network Down, Try Again.!" }));

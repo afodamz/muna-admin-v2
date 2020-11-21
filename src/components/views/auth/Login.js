@@ -26,7 +26,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 
-import * as actions from '../../../Redux/Actions/auth/auth';
+import * as actions from '../../../Redux/Actions/auth';
 import { connect } from 'react-redux';
 import { ValidatorForm} from 'react-material-ui-form-validator';
 

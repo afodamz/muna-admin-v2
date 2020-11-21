@@ -1,6 +1,6 @@
 import axios from 'axios';
 import * as actionTypes from './actionTypes';
-import { SetAlert } from "../AlertAction";
+import { SetAlert } from "./AlertAction";
 
 export const authStart = () => {
     return {
